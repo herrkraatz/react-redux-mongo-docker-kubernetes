@@ -46,7 +46,7 @@ But to show how it generally works, we'll still deploy our own MongoDB instance(
         2. [Deployment Steps](#chapter3b2)
         3. [Important ! Cleanup !](#chapter3b3)
 4. [Important Todo's](#chapter4)
-5. [Important links](#chapter5)
+5. [Important Links](#chapter5)
 
 
 ## <a id="chapter1"></a>1. Getting Started - Testing on your own machine outside of Docker containers
@@ -2480,7 +2480,7 @@ Deleted cluster: "kubernetes-demo-cluster.k8s.local"
 
 Our file server/config.js contains our secret for passport service. Do NOT push it to github !
 
-## <a id="chapter5"></a>5. Important links (in my eyes)
+## <a id="chapter5"></a>5. Important Links (in my eyes)
 
 ### Have a look (Load Balancing links see inline above)
 
