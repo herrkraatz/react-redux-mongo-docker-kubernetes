@@ -1243,7 +1243,9 @@ So our next script to run:
     ```
     
     `-it` (`-i` means interactive, `-t` means "Allocate a pseudo-TTY") both are needed for the `bash` to work
+    
     `bash` opens a bash INSIDE mongod-0
+    
     `-c` (`-c` means container)
     
     In the bash we tell mongo to connect to the Replica Set:
@@ -1835,8 +1837,11 @@ Autoscaling is done with Horizontal Pod Autoscaler (HPA):
 > kubectl autoscale deployment express-deployment --cpu-percent=50 --min=1 --max=5
 ```
 `--cpu-percent=50` means 50% CPU per Pod
+
 `--min=1` means minimum 1 Pod
+
 `--max=5` means maximum 5 Pods
+
 
 - HPA tries to keep application performant
 - Adjusts the number of replicas, up or down, e.g. between min=1 and max=5, 3 Pods may become the perfect fit at a time for an average CPU limit specified by the admin
@@ -1859,6 +1864,7 @@ How we do it:
         limits:
           cpu: "200m"
     ```
+    
     `100m` means 10% (or 100 of 1000 (m))
     
 
@@ -2292,7 +2298,7 @@ So in total we'll have 7 Linux machines running (Master, etcd, 5 Application Nod
     > aws s3api create-bucket --bucket kubernetes-demo-bucket --region us-east-1 --create-bucket-configuration LocationConstraint=us-east-1
     ```
    
-    So let's go on with LocationConstraint. This might be an issue on us-east-1 only.
+    So let's go on without LocationConstraint. This might be an issue on us-east-1 only.
 
 
 5. Create cluster using kops having ONE Master
