@@ -38,7 +38,7 @@ But to show how it generally works, we'll still deploy our own MongoDB instance(
         4. [Testing the cluster](#chapter3a4)
         5. [Scaling the cluster up](#chapter3a5)
         6. [How To: Deployment A depends on Deployment B](#chapter3a6)
-        7. [How To: Debugging / Opening a shell in a Pod](#chapter3a7)
+        7. [How To: Debugging / Monitoring](#chapter3a7)
         8. [How To: An image has to be re-built and re-deployed](#chapter3a8)
         9. [Clean up / Teardown / Undeployment](#chapter3a9)
     2. [Then AWS](#chapter3b)
@@ -1957,7 +1957,7 @@ I took it out again. Otherwise you need to wait 60 seconds even when during deve
 
 Let's move on.
 
-## <a id="chapter3a7"></a>g. How To: Debugging
+## <a id="chapter3a7"></a>g. How To: Debugging / Monitoring
 
 ### Important of course is to have a look into the log files:
 
