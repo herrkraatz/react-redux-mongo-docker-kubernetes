@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-service
+  labels:
+    app: express-app
+spec:
+#  type: LoadBalancer
+  type: NodePort # NodePort + LoadBalancer enable external access (from internet) to this Service. NodePort is usually for testing. LoadBalancer Service is cloud specific (and can become expensive). Ingress Load Balancer could be the better choice.
+  ports:
+  - port: 3090
+    protocol: TCP
+    nodePort: 30001 # <-- Port 30000 is taken for minikube's dashboard
+  selector:
+      app: express-app
+---
+apiVersion: apps/v1 #extensions/v1beta1
+kind: Deployment
+metadata:
+  name: express-deployment
+spec:
+  replicas: 1
+  selector: # Needed for new apiVersion: apps/v1, NOT for extensions/v1beta1
+      matchLabels:
+        app: express-app
+  template:
+    metadata:
+      labels:
+        app: express-app
+    spec:
+      containers:
+      - name: express-app
+        image: k8s-node-api
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3090
+#      initContainers:
+#      - name: init-express-app
+#        image: busybox
+#        command: ['sh', '-c', 'sleep 60;']

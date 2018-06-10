@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-service
+  labels:
+    app: react-app
+spec:
+#  type: LoadBalancer
+  type: NodePort # NodePort + LoadBalancer enable external access (from internet) to this Service. NodePort is usually for testing. LoadBalancer Service is cloud specific (and can become expensive). Ingress Load Balancer could be the better choice.
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30003 # <-- Port 30000 is taken for minikube's dashboard
+  selector:
+    app: react-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-deployment
+  labels:
+    app: react-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-app
+  template:
+    metadata:
+      labels:
+        app: react-app
+    spec:
+      containers:
+      - name: react-app
+        image: k8s-react-nginx
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80

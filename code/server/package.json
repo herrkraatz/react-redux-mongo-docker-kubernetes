@@ -1,0 +1,27 @@
+{
+  "name": "server-app",
+  "version": "1.0.0",
+  "description": "Great thanks to Stephen Grider's Redux Simple Starter Repo and his Udemy Course Advanced React and Redux which were the basis of this slightly modified code",
+  "main": "index.js",
+  "repository": "git@github.com:herrkraatz/react-redux-mongo-docker-kubernetes.git",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./index.js",
+    "start": "node ./index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "jwt-simple": "^0.5.1",
+    "mongoose": "^5.0.10",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.17.2",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
+  }
+}

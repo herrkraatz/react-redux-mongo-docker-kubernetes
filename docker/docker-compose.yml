@@ -1,0 +1,45 @@
+version: '3'
+services:
+    db:
+        image: mongo
+        ports:
+            - "27017:27017"
+        volumes:
+            - ./data/db:/data/db
+    express:
+        build:
+            context: ../code/server
+            dockerfile: Dockerfile
+        ports:
+            - "3090:3090"
+        depends_on:
+            - db
+
+        # Specifying depends_on: db is not enough, as docker-compose only waits with bringing express container up
+        # when db container is up and running, but docker-compose has no clue that express needs MongoDB to have started
+        # up completely in the running container as well.
+        # So let's use command below to ping and only start our server (npm start) when the database is ready.
+        # Having the server Dockerfile already run the CMD [ "npm", "start" ] is not a problem. The command here will
+        # just overrride the CMD in the Dockerfile: https://docs.docker.com/compose/compose-file/#command
+        # This way we can still startup the server standalone, without docker-compose.
+
+        # > allows multiple lines in yaml file
+        # sh -c allow to run multiple shell commands, one per line
+        command: >
+              sh -c "
+                while ! nc -z db 27017;
+                do
+                  echo sleeping;
+                  sleep 1;
+                done;
+                echo Connected!;
+                npm start;
+                "
+    react:
+        build:
+            context: ../code/client
+            dockerfile: Dockerfile
+        ports:
+            - "8080:80"
+        depends_on:
+            - express

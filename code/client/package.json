@@ -1,0 +1,34 @@
+{
+  "name": "client-app",
+  "version": "1.0.0",
+  "description": "Great thanks to Stephen Grider's Redux Simple Starter Repo and his Udemy Course Advanced React and Redux which were the basis of this slightly modified code",
+  "main": "index.js",
+  "repository": "git@github.com:herrkraatz/react-redux-mongo-docker-kubernetes.git",
+  "scripts": {
+    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.dev.js",
+    "build": "webpack --config webpack.config.prod.js && cp index.html dist && cp -R style dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^4.10.1",
+    "webpack-cli": "^2.1.4",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "axios": "^0.9.1",
+    "babel-preset-stage-1": "^6.1.18",
+    "lodash": "^4.17.10",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-redux": "^4.0.0",
+    "react-router": "^2.0.1",
+    "redux": "^3.0.4",
+    "redux-form": "^5.0.1",
+    "redux-thunk": "^2.0.1"
+  }
+}
