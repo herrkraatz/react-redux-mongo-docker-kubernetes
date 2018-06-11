@@ -45,7 +45,7 @@ But to show how it generally works, we'll still deploy our own MongoDB instance(
         1. [Architecture](#chapter3b1)
         2. [Deployment Steps](#chapter3b2)
         3. [Important ! Cleanup !](#chapter3b3)
-4. [Important Todo's](#chapter4)
+4. [Important last Todo's](#chapter4)
 5. [Links](#chapter5)
 
 
@@ -2480,7 +2480,7 @@ Deleted cluster: "kubernetes-demo-cluster.k8s.local"
 >
 ```
 
-## <a id="chapter4"></a>4. Important ToDo's
+## <a id="chapter4"></a>4. Important last ToDo's
 
 ### Add config.js to .gitignore
 
