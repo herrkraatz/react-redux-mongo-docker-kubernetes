@@ -2488,7 +2488,7 @@ Deleted cluster: "kubernetes-demo-cluster.k8s.local"
 
 - Follow AWS Cleanup right above if you just use AWS for testing out Kubernetes. AWS charges !
 
-## <a id="chapter5"></a>5. Important Links (in my eyes)
+## <a id="chapter5"></a>5. Links
 
 ### Have a look (Load Balancing links see inline above)
 
@@ -2514,7 +2514,7 @@ Deleted cluster: "kubernetes-demo-cluster.k8s.local"
     - https://github.com/StephenGrider/AdvancedReduxCode
     - https://github.com/StephenGrider/ReduxSimpleStarter
 
-4. Best practices for Kubernetes in production
+4. Best practices for Kubernetes in Production
 
     - Auto-deployments general: https://techbeacon.com/one-year-using-kubernetes-production-lessons-learned
     - Auto-deployments with Weave: https://www.weave.works/technologies/weaveworks-on-aws/
