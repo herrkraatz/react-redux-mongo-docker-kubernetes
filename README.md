@@ -46,7 +46,7 @@ But to show how it generally works, we'll still deploy our own MongoDB instance(
         2. [Deployment Steps](#chapter3b2)
         3. [Important ! Cleanup !](#chapter3b3)
 4. [Important Todo's](#chapter4)
-5. [Important Links](#chapter5)
+5. [Links](#chapter5)
 
 
 ## <a id="chapter1"></a>1. Getting Started - Testing on your own machine outside of Docker containers
@@ -2208,7 +2208,7 @@ Run in any directory:
 IMPORTANT: One hour on AWS with 7 Linux machines running can cost some Dollars already. So please be careful !!
 
 If you're done with Kubernetes testing on AWS, first delete the cluster again (see below) 
-and better delete your entire AWS account after that if you're not sure what you're doing.
+and better delete your entire AWS account after that if you're not 100% sure what you're doing.
 
 Also kops cli is stable, but nobody is perfect. When deleting the cluster via kops cli always something can go wrong.
 So also better check on AWS console if the resources are really deleted.
@@ -2460,7 +2460,7 @@ So in total we'll have 7 Linux machines running (Master, etcd, 5 Application Nod
 IMPORTANT: One hour on AWS with 7 Linux machines running can cost some Dollars already. So please be careful !!
 
 If you're done with Kubernetes testing on AWS, first delete the cluster again (see below) 
-and better delete your entire AWS account after that if you're not sure what you're doing.
+and better delete your entire AWS account after that if you're not 100% sure what you're doing.
 
 Also kops cli is stable, but nobody is perfect. When deleting the cluster via kops cli always something can go wrong.
 So also better check on AWS console if the resources are really deleted.
@@ -2484,7 +2484,9 @@ Deleted cluster: "kubernetes-demo-cluster.k8s.local"
 
 ### Add config.js to .gitignore
 
-Our file server/config.js contains our secret for passport service. Do NOT push it to github !
+- Our file server/config.js contains our secret for passport service. Do NOT push it to github !
+
+- Follow AWS Cleanup right above if you just use AWS for testing out Kubernetes. AWS charges !
 
 ## <a id="chapter5"></a>5. Important Links (in my eyes)
 
