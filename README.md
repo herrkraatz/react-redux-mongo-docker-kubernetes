@@ -108,7 +108,7 @@ The data is stored in this directory: `/data/db` (root directory of your Mac)
 Open a 2nd Terminal window and cd into your preferred projects directory, then run:
 
 ```
-> git clone https://github.com/makehapp/react-redux-mongo-docker-kubernetes.git
+> git clone https://github.com/herrkraatz/react-redux-mongo-docker-kubernetes.git
 ```
 
 When repo cloned successfully, cd into root/code/server and run `npm install`
