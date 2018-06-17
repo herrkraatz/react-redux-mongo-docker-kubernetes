@@ -2486,6 +2486,8 @@ Deleted cluster: "kubernetes-demo-cluster.k8s.local"
 
 - Our file server/config.js contains our secret for passport service. Do NOT push it to github !
 
+### Cleanup AWS !
+
 - Follow AWS Cleanup right above if you just use AWS for testing out Kubernetes. AWS charges !
 
 ## <a id="chapter5"></a>5. Links
