@@ -141,8 +141,8 @@ Open a 3rd Terminal window and cd into root/code/client and run `npm install`
 
 We should ignore the big size of development bundle.js (403 KiB) for now. Even production bundle.js in dist directory is still big (271 KiB), after you have run `npm run build`. 
 Two ways out: 
-- Lazy loading of dependencies (package.json) that are NOT needed while very first rendering the page in the browser (keep TTIF, time to first bite, definately below 300 ms)
-- Server Side Rendering to just push ready HTML & CSS down to the browser
+- Lazy loading of files that are NOT needed while very first rendering the application in the browser (keep TTIF, Time To First Bite, definately below 300 ms). Check out https://webpack.js.org/guides/code-splitting/
+- Server Side Rendering to first push static HTML & CSS down to the browser so the user has something to do for some seconds while, in parallel, the application (React framework & code) is loaded into the browser and, when done, gets hydrated (merged) into the initially loaded (server side rendered) HTML & CSS.
 
 Eventually PREACT (https://preactjs.com/) might be of help (They say: "Fast 3kB alternative to React with the same modern API.")
 
