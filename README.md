@@ -2533,4 +2533,4 @@ Deleted cluster: "kubernetes-demo-cluster.k8s.local"
 
 ### Credits to the authors of above links ! Thank you very much !
 
-### And credits to the reader: Thank you very much, too !
+### And credits to the reader: Thanks for your visit !
