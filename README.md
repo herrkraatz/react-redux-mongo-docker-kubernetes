@@ -1780,123 +1780,125 @@ Ingress + Nginx/Ingress Load Balancer:
 - https://kubernetes.io/docs/concepts/services-networking/ingress/
 - https://github.com/kubernetes/charts/tree/master/stable/nginx-ingress
 
-Other Load Balancer:
+Other Load Balancers:
 
 - https://www.envoyproxy.io/
 - https://www.nginx.com/blog/what-is-a-service-mesh/
 
 Anyway, independent of the Load Balancer you will choose one day, if you need to scale up Pods in our Server deployment:
 
-#### Manually scaling up Pod (1 --> 3)
-
-```
-> kubectl scale --replicas=3 deployment express-deployment
-```  
-  
-or edit `express-deployment.yml` file:   
-
-```
-spec:
-  replicas: 3
-```
-
-Then run:
-
-```
-> cd root/kubernetes/minikube
-> kubectl apply -f express-deployment.yml
-```
-                    
-Doublecheck 3 Endpoints now:
-
-```
-> kubectl describe svc express-service
-Name:                     express-service
-Namespace:                default
-Labels:                   app=express-app
-Annotations:              kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"express-app"},"name":"express-service","namespace":"default"},"spec":...
-Selector:                 app=express-app
-Type:                     NodePort
-IP:                       10.97.118.53
-Port:                     <unset>  3090/TCP
-TargetPort:               3090/TCP
-NodePort:                 <unset>  30001/TCP
-Endpoints:                172.17.0.12:3090,172.17.0.13:3090,172.17.0.14:3090
-Session Affinity:         None
-External Traffic Policy:  Cluster
-Events:                   <none>
-Sempres-MBP:minikube piano$ 
-```
-
-#### Let Kubernetes engine take care of it: Autoscaling
-
-
-Autoscaling is done with Horizontal Pod Autoscaler (HPA):
-
-```
-> kubectl autoscale deployment express-deployment --cpu-percent=50 --min=1 --max=5
-```
-`--cpu-percent=50` means 50% CPU per Pod
-
-`--min=1` means minimum 1 Pod
-
-`--max=5` means maximum 5 Pods
-
-
-- HPA tries to keep application performant
-- Adjusts the number of replicas, up or down, e.g. between min=1 and max=5, 3 Pods may become the perfect fit at a time for an average CPU limit specified by the admin
-- When CPU hits 50%, it will try to add another replica (Pod)
-
-How we do it:
-
-1. Add new parameters (`resources` key) to `express-deployment.yml` file: 
+1. Manually scaling up Pod (1 --> 3)
 
     ```
-    containers:
-    - name: express-app
-      image: k8s-node-api
-      imagePullPolicy: Never
-      ports:
-      - containerPort: 3090
-      resources:
-        requests:
-          cpu: "100m"
-        limits:
-          cpu: "200m"
+    > kubectl scale --replicas=3 deployment express-deployment
+    ```  
+      
+    or edit `express-deployment.yml` file:   
+    
+    ```
+    spec:
+      replicas: 3
     ```
     
-    `100m` means 10% (or 100 of 1000 (m))
+    Then run:
     
+    ```
+    > cd root/kubernetes/minikube
+    > kubectl apply -f express-deployment.yml
+    ```
+                        
+    Doublecheck 3 Endpoints now:
+    
+    ```
+    > kubectl describe svc express-service
+    Name:                     express-service
+    Namespace:                default
+    Labels:                   app=express-app
+    Annotations:              kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"express-app"},"name":"express-service","namespace":"default"},"spec":...
+    Selector:                 app=express-app
+    Type:                     NodePort
+    IP:                       10.97.118.53
+    Port:                     <unset>  3090/TCP
+    TargetPort:               3090/TCP
+    NodePort:                 <unset>  30001/TCP
+    Endpoints:                172.17.0.12:3090,172.17.0.13:3090,172.17.0.14:3090
+    Session Affinity:         None
+    External Traffic Policy:  Cluster
+    Events:                   <none>
+    > 
+    ```
 
-2. Terminal window #1: Add HPA:
+2. Autoscaling: Let Kubernetes engine take care of it
 
+    Autoscaling is done with Horizontal Pod Autoscaler (HPA):
+    
     ```
     > kubectl autoscale deployment express-deployment --cpu-percent=50 --min=1 --max=5
     ```
-
-3. In new Terminal window: Run BusyBox to bring Pod to a limit:
-
-    Run BusyBox:
-
-    ```
-    > kubectl run -i -tty load-generator --image=busybox /bin/sh
-    ```
-
-    Run infinite loop (where http://express-deployment.default.svc.cluster.local is our DNS):
-
-    ```
-    > while true ; do wget -q -O- http://express-deployment.default.svc.cluster.local ; done
-    ```
-
-
-4. In Terminal window #1 run:
-
-    ```
-    > kubectl get hpa
-    ```
-
-
---> Replicas will go up soon.
+    `--cpu-percent=50` means: The target(ed) average CPU utilization (represented as a percent of requested CPU) over all the pods. 
+    If it's not specified or negative, a default autoscaling policy will be used.
+    In other words: Each Pod gets half as much CPU as it would usually ask for. 
+    
+    Further reading:
+    - https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#autoscale
+    - https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+    - https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-cpu
+    
+    `--min=1` means minimum 1 Pod
+    
+    `--max=5` means maximum 5 Pods
+    
+    - HPA tries to keep application performant
+    - Adjusts the number of replicas, up or down, e.g. between min=1 and max=5, 3 Pods may become the perfect fit at a time for an average CPU limit specified by the admin
+    - When CPU hits > 50%, it will try to add another replica (Pod)
+    
+    How we do it:
+    
+    1. Add new parameters (`resources` key) to `express-deployment.yml` file: 
+    
+        ```
+        containers:
+        - name: express-app
+          image: k8s-node-api
+          imagePullPolicy: Never
+          ports:
+          - containerPort: 3090
+          resources:
+            requests:
+              cpu: "100m"
+            limits:
+              cpu: "200m"
+        ```
+        
+        `100m` means 10% (or 100 of 1000 (m))
+        
+    2. Terminal window #1: Add HPA:
+    
+        ```
+        > kubectl autoscale deployment express-deployment --cpu-percent=50 --min=1 --max=5
+        ```
+    
+    3. In new Terminal window: Run BusyBox to bring Pod to a limit:
+    
+        Run BusyBox:
+    
+        ```
+        > kubectl run -i -tty load-generator --image=busybox /bin/sh
+        ```
+    
+        Run infinite loop (where http://express-deployment.default.svc.cluster.local is our DNS):
+    
+        ```
+        > while true ; do wget -q -O- http://express-deployment.default.svc.cluster.local ; done
+        ```
+    
+    4. In Terminal window #1 run:
+    
+        ```
+        > kubectl get hpa
+        ```
+    
+    --> Replicas will go up soon.
 
 
 ### Client: React/Redux App deployment
@@ -2231,7 +2233,7 @@ With kops you will be able to deploy your Docker images on ASW (or on another cl
 
 ## <a id="chapter3b1"></a> a. Architecture
 
-One Master Node (parent) and 5 Application Nodes (children).
+One Master Node (parent), one etcd data store, and 5 Application Nodes (children).
 
 1. The Master will run Kubernetes services / engine:
 
@@ -2241,7 +2243,7 @@ One Master Node (parent) and 5 Application Nodes (children).
     
     ... relying on:
     
-    etcd which is 
+2. etcd which is 
     
     - a key:value database
     - a distributed key store that stores all cluster Master data
@@ -2249,7 +2251,7 @@ One Master Node (parent) and 5 Application Nodes (children).
     
     And etcd should run on another machine, other than the Master does.
 
-2. The 5 Application Nodes running 
+3. The 5 Application Nodes running 
 
     - MongoDB Replica Set (3)
     - Express Server (1)
@@ -2259,8 +2261,8 @@ One Master Node (parent) and 5 Application Nodes (children).
 More:
 
 - One Linux machine per Master/etcd
-- Should run kubelet & monit
-- Should run kube-api (accepts kubectl commands) on all Nodes that will be a Master, should be behind Load Balancer.
+- All Master Nodes should run kubelet (Monitoring the health of your Pods)
+- All Master Nodes should run kube-api (accepts kubectl commands), should be behind Load Balancer.
 
 So in total we'll have 7 Linux machines running (Master, etcd, 5 Application Nodes)
 
@@ -2453,7 +2455,22 @@ So in total we'll have 7 Linux machines running (Master, etcd, 5 Application Nod
     ```
     
     Paste URL (using port 30003) into browser and Sign In !
+    
+    
+10. Scaling up or: Bringing our Pods to the limit!
 
+    Warning! This will additionally increase costs, so be sure what you're doing ! 
+    More than 7 Linux machines will be running ! Have extra attention on cleaning up after ! And don't forget to kill BusyBox !
+     
+    I recommend to do manual scaling or autoscaling on the Node Server deployment only:
+    
+    See Minikube section above ("Scaling the cluster up"): 
+    
+    Server: Node Server deployment >> 
+        1. Manual scaling or 
+        2. Autoscaling
+    
+    Follow same instructions as on Minikube.
 
 ## <a id="chapter3b3"></a> c. Important ! Cleanup ! 
 
