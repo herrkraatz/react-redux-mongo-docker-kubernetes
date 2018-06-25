@@ -1835,9 +1835,11 @@ Anyway, independent of the Load Balancer you will choose one day, if you need to
     ```
     > kubectl autoscale deployment express-deployment --cpu-percent=50 --min=1 --max=5
     ```
-    `--cpu-percent=50` means: The target(ed) average CPU utilization (represented as a percent of requested CPU) over all the pods. 
-    If it's not specified or negative, a default autoscaling policy will be used.
-    In other words: Each Pod gets half as much CPU as it would usually ask for. 
+    `--cpu-percent=50` means: The target(ed) average CPU utilization (represented as a percent of requested CPU) over all the Pods. 
+    In other words: Each Pod gets half as much CPU as it would usually ask for.
+    
+    If it's not specified or negative (`-1`), a default autoscaling policy will be used.
+    
     
     Further reading:
     - https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#autoscale
@@ -1850,7 +1852,7 @@ Anyway, independent of the Load Balancer you will choose one day, if you need to
     
     - HPA tries to keep application performant
     - Adjusts the number of replicas, up or down, e.g. between min=1 and max=5, 3 Pods may become the perfect fit at a time for an average CPU limit specified by the admin
-    - When CPU hits > 50%, it will try to add another replica (Pod)
+    - When total CPU hits > 50%, it will try to add another replica (Pod)
     
     How we do it:
     
@@ -2462,13 +2464,13 @@ So in total we'll have 7 Linux machines running (Master, etcd, 5 Application Nod
     Warning! This will additionally increase costs, so be sure what you're doing ! 
     More than 7 Linux machines will be running ! Have extra attention on cleaning up after ! And don't forget to kill BusyBox !
      
-    I recommend to do manual scaling or autoscaling on the Node Server deployment only:
+    I recommend to do manual upscaling or autoscaling on the Node Server deployment only because I described it in detail in Minikube section above ("Scaling the cluster up"): 
     
-    See Minikube section above ("Scaling the cluster up"): 
+    Server: Node Server deployment:
     
-    Server: Node Server deployment >> 
-        1. Manual scaling or 
-        2. Autoscaling
+    1. Manual scaling or
+    
+    2. Autoscaling
     
     Follow same instructions as on Minikube.
 
