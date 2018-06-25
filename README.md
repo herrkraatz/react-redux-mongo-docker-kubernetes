@@ -2264,7 +2264,7 @@ More:
 
 - One Linux machine per Master/etcd
 - All Master Nodes should run kubelet (Monitoring the health of your Pods)
-- All Master Nodes should run kube-api (accepts kubectl commands), should be behind Load Balancer.
+- All Master Nodes should run kube-api (accepts kubectl commands), should be behind Load Balancer
 
 So in total we'll have 7 Linux machines running (Master, etcd, 5 Application Nodes)
 
