@@ -8,6 +8,24 @@ MongoDB: Instead of deploying your own MongoDB instance it is certainly a better
 
 But to show how it generally works, we'll still deploy our own MongoDB instance(s) ourselves.
 
+/*Note to used Client setup having React version 14.3 (0.14.3):*/
+
+The version we use is based on Stephen Grider's great ReduxSimpleStarter, still without CRA (Create React Native Starterkit).
+In my opinion great to see more of React under the hood if we get it running ourselves. And to see how Webpack and Babel work.
+
+But time goes on, and Stephen recently changed his setup to use CRA, which you can find here:
+
+https://github.com/StephenGrider/AdvancedReduxCode/tree/master/auth
+
+It uses React version 16.3.2, and 
+- due to CRA there is no more Webpack and Babel needed: `react-scripts` take over
+- due to `react-router-dom`, `react-router` is also no longer needed
+
+Feel free to try out Stephen Griders latest version. It's a great exercise.
+
+We stick to the original version. This tutorial is about deploying with Docker and Kubernetes.
+
+
 ## Table of Contents
 
 1. [Getting Started - Testing on your own machine outside of Docker containers](#chapter1)
@@ -218,7 +236,7 @@ You'll see that `node` image was downloaded first and put in our local Docker en
 Pulls Node image based on Linux Alpine (tagged 9.11.1, the latest at the time of writing) from Docker Hub: https://hub.docker.com/_/node/
 
 Why Alpine? 
-Alpine describes itself as: Small. Simple. Secure. Alpine Linux is a security-oriented, lightweight Linux distribution based on musl libc and busybox.
+Alpine describes itself as: Small. Simple. Secure. Alpine Linux is a security-oriented, lightweight Linux distribution based on musl libc and BusyBox.
 Further reading: https://github.com/nodejs/docker-node#nodealpine
 
 ```
@@ -1840,19 +1858,21 @@ Anyway, independent of the Load Balancer you will choose one day, if you need to
     
     If it's not specified or negative (`-1`), a default autoscaling policy will be used.
     
-    
-    Further reading:
-    - https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#autoscale
-    - https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
-    - https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-cpu
-    
     `--min=1` means minimum 1 Pod
     
     `--max=5` means maximum 5 Pods
     
+    Summary:
+    
     - HPA tries to keep application performant
     - Adjusts the number of replicas, up or down, e.g. between min=1 and max=5, 3 Pods may become the perfect fit at a time for an average CPU limit specified by the admin
     - When total CPU hits > 50%, it will try to add another replica (Pod)
+    
+    Further reading:
+    
+    - https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#autoscale
+    - https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+    - https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-cpu
     
     How we do it:
     
@@ -1888,10 +1908,10 @@ Anyway, independent of the Load Balancer you will choose one day, if you need to
         > kubectl run -i -tty load-generator --image=busybox /bin/sh
         ```
     
-        Run infinite loop (where http://express-deployment.default.svc.cluster.local is our DNS):
+        Run infinite loop (where http://express-deployment.default.svc.cluster.local:30001 is our DNS, getting called on port 30001):
     
         ```
-        > while true ; do wget -q -O- http://express-deployment.default.svc.cluster.local ; done
+        > while true ; do wget -q -O- http://express-deployment.default.svc.cluster.local:30001 ; done
         ```
     
     4. In Terminal window #1 run:
@@ -1950,7 +1970,7 @@ spec:
         command: ['sh', '-c', 'sleep 60;']
 ```
 
-We could use BUSYBOX image (see https://busybox.net/about.html) to do standalone pings to other services. 
+We could use BusyBox image (see https://busybox.net/about.html) to do standalone pings to other services. 
 Only if all commands are executed, Kubernetes will go on running main container `express-app`.
 
 As you can see, a sleep of 60 seconds isn't very professional, 
