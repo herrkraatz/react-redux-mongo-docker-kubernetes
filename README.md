@@ -8,12 +8,12 @@ MongoDB: Instead of deploying your own MongoDB instance it is certainly a better
 
 But to show how it generally works, we'll still deploy our own MongoDB instance(s) ourselves.
 
-/*Note to used Client setup having React version 14.3 (0.14.3):*/
+### Note to used Client setup having React version 14.3 (0.14.3):
 
 The version we use is based on Stephen Grider's great ReduxSimpleStarter, still without CRA (Create React Native Starterkit).
 In my opinion great to see more of React under the hood if we get it running ourselves. And to see how Webpack and Babel work.
 
-But time goes on, and Stephen recently changed his setup to use CRA, which you can find here:
+But time goes on, and Stephen Grider recently changed his setup to use CRA, which you can find here:
 
 https://github.com/StephenGrider/AdvancedReduxCode/tree/master/auth
 
@@ -23,7 +23,7 @@ It uses React version 16.3.2, and
 
 Feel free to try out Stephen Griders latest version. It's a great exercise.
 
-We stick to the original version. This tutorial is about deploying with Docker and Kubernetes.
+We stick to the original version for now. This tutorial is about deploying with Docker and Kubernetes.
 
 
 ## Table of Contents
