@@ -8,7 +8,7 @@ MongoDB: Instead of deploying your own MongoDB instance it is certainly a better
 
 But to show how it generally works, we'll still deploy our own MongoDB instance(s) ourselves.
 
-### Some notes to used Client setup having React version 14.3 (0.14.3):
+### Some Notes to used Client setup having React version 14.3 (0.14.3):
 
 The version we use is based on Stephen Grider's great ReduxSimpleStarter, still without CRA (Create React Native Starterkit).
 In my opinion great to see more of React under the hood if we get it running ourselves. And to see how Webpack and Babel work.
