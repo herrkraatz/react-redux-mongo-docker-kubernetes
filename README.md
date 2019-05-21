@@ -2076,7 +2076,7 @@ What Heapster can monitor:
 
 How it works:
 
- - Heapster, talks to kubelet (kubelet runs pods, and resolves DNS names to DNS service IP addresses) which fetches the data from C-Advisor, then it stores data into
+ - Heapster talks to kubelet (kubelet runs pods, and resolves DNS names to DNS service IP addresses) which fetches the data from C-Advisor, then it stores data into
  - InfluxDB, and the data will be visualized through:
  - Grafana
  
@@ -2245,17 +2245,14 @@ So also better check on AWS console if the resources are really deleted.
 
 ### Install kops cli
 
-If you haven't kops installed on your machine, please install free kops cli ([Instructions](https://github.com/kubernetes/kops)).
+If you haven't kops cli installed on your machine, please install free kops cli ([Instructions](https://github.com/kubernetes/kops)).
 
 With kops you will be able to deploy your Docker images on ASW (or on another cloud, or on your own solution).
 
 
 ### Install aws cli
 
-If you haven't kops installed on your machine, please install free kops cli ([Instructions](https://docs.aws.amazon.com/cli/latest/userguide/installing.html), [Easier](https://docs.aws.amazon.com/cli/latest/userguide/awscli-install-bundle.html#install-bundle-other)).
-
-With kops you will be able to deploy your Docker images on ASW (or on another cloud, or on your own solution).
-
+If you haven't aws cli installed on your machine, please install free aws cli ([Instructions](https://docs.aws.amazon.com/cli/latest/userguide/installing.html), [Easier](https://docs.aws.amazon.com/cli/latest/userguide/awscli-install-bundle.html#install-bundle-other)).
 
 
 ## <a id="chapter3b1"></a> a. Architecture
