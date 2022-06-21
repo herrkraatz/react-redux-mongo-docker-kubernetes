@@ -1,3 +1,6 @@
+# Sorry !! Gosh ... 4 years went by.
+I hope to find time soon to update this tutorial.
+
 # (React/Redux App + Node Server + MongoDB) => Docker => Kubernetes => AWS
 
 This tutorial shall help containerize your stack (React/Redux App, Node Server, and MongoDB) into Docker containers and deploy it for production via Kubernetes to AWS.
@@ -28,7 +31,7 @@ We stick to the original version for now. This tutorial is about deploying with 
 ### IMPORTANT CAUTION: 
 The npm packages might have discovered vulnerabilities by now. 
 So do not use the combination of our npm versions in your production environment, but within a test environment instead that is sandboxed from your production network.
-Unfortunately the author has no time right now to always keep the npm packages at their latest versions and ensure that their combination still play successfully together. The tuturial is supposed to show how it works and should help building working prototypes to make life easier for you.
+Unfortunately the author has no time right now to always keep the npm packages at their latest versions and ensure that their combination still plays successfully together. The tuturial is supposed to show how it works and should help building working prototypes to make life easier for you.
 
 
 ## Table of Contents
